@@ -1,0 +1,44 @@
+{
+  "cars": [
+    {
+      "id": 27910706,
+      "adi": "Kia",
+      "modeli": "Sorento",
+      "tarixi": "2018",
+      "olke": "Cənubi Koreya",
+      "reng": "mavi",
+      "yanacaq": "benzin",
+      "alis_qiymeti": "12000",
+      "satis_qiymeti": "16000",
+      "status": "satilir",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5m9hDYnzdbsnW_11qp_oM2O5_juwiIVB61g&usqp=CAU"
+    },
+    {
+      "id": 27912654,
+      "adi": "Mercedes",
+      "modeli": "AMG-63",
+      "tarixi": "2021",
+      "olke": "Almanya",
+      "reng": "aciq yasil",
+      "yanacaq": "benzin",
+      "alis_qiymeti": "25000",
+      "satis_qiymeti": "36000",
+      "status": "satildi",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV2NF4CuhxxFcEfzJ28ZSqlOks45cHnD-gvw&usqp=CAU"
+    },
+    {
+      "id": 27910766,
+      "adi": "BMW",
+      "modeli": "X5",
+      "tarixi": "2022",
+      "olke": "Almanya",
+      "reng": "ag",
+      "yanacaq": "benzin",
+      "alis_qiymeti": "16000",
+      "satis_qiymeti": "21000",
+      "status": "satildi",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAiduVKYL5wno_HAv0ep3cFwpJ2bb7QB437A&usqp=CAU"
+    }
+  ],
+  "delete_cars": []
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <title>CREATE PRODUCT</title>
+</head>
+
+<body>
+    <br>
+
+    <body style="background-color: thistle">
+
+        <nav>
+            <button><a href="./allproduct.html">Məhsullar</a></button>
+            <button><a href="./addbasket.html">Səbətdəki məhsullar</a></button>
+            <button><a href="./deleteproduct.html">Silinmis mehsullar </a></button>
+            <button><a href="./createproduct.html">Məhsul yarat</a></button>
+            <button><a href="./editproduct.html">Məhsul redaktə et</a></button>
+        </nav>
+        <br>
+        <hr>
+        <h3 style="color: brown">MƏHSUL YARAT</h3>
+        <hr>
+
+        <input type="text" style="width: 200px;height: 20px;" placeholder=" məhsul adı" id="məhsul"><br />
+        <input type="text" style="width: 200px;height: 20px;" placeholder=" məhsul çəkisi" id="çəki"><br />
+        <input type="text" style="width: 200px;height: 20px;" placeholder=" vahid (kq,əd,litr)" id="vahid"><br />
+        <input type="text" style="width: 200px;height: 20px;" placeholder=" məhsul qiyməti" id="qiymət"><br />
+        <input type="text" style="width: 200px;height: 20px;" placeholder=" məhsul şəkili" id="şəkil"><br /> <br>
+        <button style="color:crimson; width: 120px;height: 35px;" id="btn">Məhsul əlavə et</button>
+
+        <script>
+
+            const btn = document.getElementById("btn")
+            btn.onclick = () => {
+                const productValue = document.getElementById("məhsul").value
+                const weightValue = document.getElementById("çəki").value
+                const quantityValue = document.getElementById("vahid").value
+                const priceValue = document.getElementById("qiymət").value
+                const imgUrlValue = document.getElementById("şəkil").value
+                if (isNaN(weightValue) || !isNaN(productValue) || productValue === "" || weightValue === "" || quantityValue === "" || priceValue === "" || imgUrlValue === "") {
+                    alert("Xanaları tam və doğru doldurun!!!")
+                } else {
+                    const body = {
+                        id: Math.floor(Date.now() / 1000),
+                        product: productValue,
+                        weight: weightValue,
+                        quantity: quantityValue,
+                        price: priceValue,
+                        imgUrl: imgUrlValue
+                    }
+
+                    axios.post("http://localhost:3000/products", body).then(() => {
+
+                        document.getElementById("məhsul").value = ""
+                        document.getElementById("çəki").value = ""
+                        document.getElementById("vahid").value = ""
+                        document.getElementById("qiymət").value = ""
+                        document.getElementById("şəkil").value = ""
+                        alert("Yeni məhsul yaradıldı...")
+
+                    })
+                }
+            }
+        </script>
+
+    </body>
+
+</html>

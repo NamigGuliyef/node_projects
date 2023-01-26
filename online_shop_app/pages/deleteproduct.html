@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <title>DELETE PRODUCT</title>
+</head>
+
+<body>
+    <br>
+
+    <body style="background-color: thistle">
+
+        <nav>
+            <button><a href="./allproduct.html">Məhsullar</a></button>
+            <button><a href="./addbasket.html">Səbətdəki məhsullar</a></button>
+            <button><a href="./deleteproduct.html">Silinmis mehsullar </a></button>
+            <button><a href="./createproduct.html">Məhsul yarat</a></button>
+            <button><a href="./editproduct.html">Məhsul redaktə et</a></button>
+        </nav>
+        <br>
+        <hr>
+        <h3 style="color: brown"> SİLİNMİŞ MƏHSULLAR</h3>
+        <hr>
+        <input type="text" style="width: 200px;height: 20px" placeholder="məhsul id" id="mehsulİD">
+        <button style="color:crimson;width: 120px;height: 25px" type="btn" id="btn_geri">Stoka geri qaytar</button>
+        <div id="root"></div>
+
+        <script>
+
+            const root = document.getElementById("root")
+            async function GetDeleteProduct() {
+                const { data } = await axios.get("http://localhost:3000/deleteProduct")
+                return data;
+            }
+
+            async function WriteDeleteProduct() {
+                const data = await GetDeleteProduct()
+                data.forEach(({ id, product, weight, quantity, price, imgUrl }) => {
+                    root.innerHTML +=
+                        `<div>
+                    <h5 style="color: red"> ID: ${id}</h5> 
+                     <h5> Məhsul: ${product}</h5> 
+                     <h5> Miqdar: ${weight} ${quantity}</h5> 
+                     <h5> Qiymət: ${price} AZN</h5>
+                     <img style="width: 140px;height: 140px;" src="${imgUrl}" alt="">
+                     <hr>
+                     </div>`
+                });
+            }
+            WriteDeleteProduct()
+
+            const btn_return = document.getElementById('btn_geri')
+            btn_return.onclick = () => {
+                const productID = document.getElementById('mehsulİD').value
+                if (productID === "") {
+                    alert("Məhsul İD daxil edin")
+                } else {
+                    async function WriteReturnProduct() {
+                        const data = await GetDeleteProduct()
+                        const ReturnProduct = data.find(({ id }) => id === +productID)
+                        axios.post("http://localhost:3000/products", ReturnProduct).then(() => {
+                            alert("Məhsul stoka geri qaytarıldı ...")
+                        })
+                        axios.delete(`http://localhost:3000/deleteProduct/${productID}`).then((respons) => {
+                            alert("Məhsul silinmiş bazasından çıxarıldı...")
+                            document.getElementById('mehsulİD').value = ""
+                            document.location.reload()
+                        })
+                    }
+                    WriteReturnProduct()
+                }
+            }
+
+        </script>
+
+    </body>
+
+</html>

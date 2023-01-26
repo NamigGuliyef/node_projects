@@ -1,0 +1,70 @@
+{
+  "products": [
+    {
+      "id": 1673521429,
+      "product": "Armud",
+      "weight": 6,
+      "quantity": "kq",
+      "price": "1.30",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzVmlovpR4qS1JGrWpbxv4sFPxQm8PsAXJCA&usqp=CAU"
+    },
+    {
+      "id": 1673521524,
+      "product": "Portagal",
+      "weight": 2,
+      "quantity": "kq",
+      "price": "1.40",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1FwevOHoOnpG4N5cbNCFqsVEhazo06bKTBQ&usqp=CAU"
+    },
+    {
+      "id": 1673521315,
+      "product": "Banan",
+      "weight": 1,
+      "quantity": "kq",
+      "price": "2.20",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS55gT9d71ux1HpjCmqwlZMW7l_trZIPVH0Mw&usqp=CAU"
+    },
+    {
+      "id": 1673720748,
+      "product": "Fındıq",
+      "weight": 15,
+      "quantity": "kq",
+      "price": "18",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpTNy9DERhu5CqTu5A7aOxCXTnvnfJJ3NNOQ&usqp=CAU"
+    },
+    {
+      "id": 1673720991,
+      "product": "Qoz",
+      "weight": 7,
+      "quantity": "kq",
+      "price": "8",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnvS3PyvCRuXPOVOam-c7W2ch8J7_QsfBSmQ&usqp=CAU"
+    },
+    {
+      "id": 1673498035,
+      "product": "Alma",
+      "weight": 7,
+      "quantity": "kq",
+      "price": "1",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpFPK5BJ3dJvEZZwSbdEIaXJH3xlcXeVKz4g&usqp=CAU"
+    },
+    {
+      "id": 1673854242,
+      "product": "Nar",
+      "weight": "8",
+      "quantity": "kq",
+      "price": "0.90",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDlRI9tleF0tE_ZiFNy9R5DgDbwpDbmtz7Gw&usqp=CAU"
+    },
+    {
+      "id": 1673854243,
+      "product": "Soğan",
+      "weight": "5",
+      "quantity": "kq",
+      "price": "0.60",
+      "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDcEoQ5W_ypRmIbppEXm_k8hA2sc0kEuS1dQ&usqp=CAU"
+    }
+  ],
+  "basket": [],
+  "deleteProduct": []
+}

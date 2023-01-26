@@ -1,0 +1,26 @@
+{
+  "name": "online_shop",
+  "version": "1.0.0",
+  "description": "Online olaraq magazadan alis - veris etmek imkani yaradir.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start_nodemon": "nodemon ./index.js",
+    "start_json_server": "json-server --watch data/db.json"
+  },
+  "keywords": [
+    "online",
+    "online magaza",
+    "magaza",
+    "alis veris",
+    "online site",
+    "alis-veris sayti"
+  ],
+  "author": "ByGuliyeff",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.1",
+    "nodemon": "^2.0.20"
+  }
+}

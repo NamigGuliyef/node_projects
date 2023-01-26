@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/caricon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <title>Masin elave et</title>
+</head>
+
+<body style="background-color: burlywood">
+    <nav>
+        <button><a href="./index.html">Masinlar</a></button>
+        <button><a href="./createCar.html">Masin elave et</a></button>
+        <button><a href="./deletecar.html">Bazadan silinenler</a></button>
+        <button><a href="./report.html">Hesabat</a></button>
+    </nav>
+    <br>
+    <h3 style="color: cadetblue;">Bazaya maşın elave et:</h3>
+    <br>
+    <input type="text" style="width:200;height:20px" placeholder="masinin adi:" id="masin_adi"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="masinin modeli" id="masin_model"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="buraxilis tarixi" id="buraxilis_tarix"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="istehsal olkesi" id="istehsal_olke"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="masinin rengi" id="masin_reng"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="yanacaq" id="yanacaq"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="alis qiymeti" id="alis_qiymet"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="satis qiymeti" id="satis_qiymet"></h4><br />
+    <input type="text" style="width:200;height:20px" placeholder="Status : (satilir,satildi,bron)" id="status"></h4>
+    <br />
+    <input type="text" style="width:200;height:20px" placeholder="Link elave et" id="imgUrl"></h4>
+
+    <br />
+    <br>
+    <button style="color: brown" id="btn">Yadda saxla</button>
+
+    <script>
+        const btn = document.getElementById('btn')
+        btn.onclick = () => {
+            const adValue = document.getElementById('masin_adi').value
+            const modelValue = document.getElementById('masin_model').value
+            const tarixValue = document.getElementById('buraxilis_tarix').value
+            const olkeValue = document.getElementById('istehsal_olke').value
+            const rengValue = document.getElementById('masin_reng').value
+            const yanacaqValue = document.getElementById('yanacaq').value
+            const qiymetValue = document.getElementById('alis_qiymet').value
+            const satisValue = document.getElementById('satis_qiymet').value
+            const statusValue = document.getElementById('status').value
+            const imgUrlValue = document.getElementById('imgUrl').value
+
+            if (isNaN(qiymetValue) || isNaN(satisValue)) {
+                alert("Dogru doldurun...")
+            } else if (adValue == "", modelValue == "", tarixValue == "", olkeValue == "", rengValue == "", yanacaqValue == "", qiymetValue == "", satisValue == "", statusValue == "") {
+                alert("Xanalari tam doldurun...")
+            } else {
+                const body = {
+                    id: Math.floor(new Date() / 60000),
+                    adi: adValue,
+                    modeli: modelValue,
+                    tarixi: tarixValue,
+                    olke: olkeValue,
+                    reng: rengValue,
+                    yanacaq: yanacaqValue,
+                    alis_qiymeti: qiymetValue,
+                    satis_qiymeti: satisValue,
+                    status: statusValue,
+                    imgUrl: imgUrlValue
+                }
+                const url = "http://localhost:3030/cars"
+                axios.post(url, body).then((respons) => { })
+                document.getElementById('masin_adi').value = ""
+                document.getElementById('masin_model').value = ""
+                document.getElementById('buraxilis_tarix').value = ""
+                document.getElementById('istehsal_olke').value = ""
+                document.getElementById('masin_reng').value = ""
+                document.getElementById('yanacaq').value = ""
+                document.getElementById('alis_qiymet').value = ""
+                document.getElementById('satis_qiymet').value = ""
+                document.getElementById('status').value = ""
+                document.getElementById('imgUrl').value = ""
+                alert("Melumatlar daxil edildi")
+            }
+        }
+    </script>
+
+</body>
+
+</html>

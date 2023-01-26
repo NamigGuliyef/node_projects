@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <title>Add Basket</title>
+    <style>
+        #root {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            padding: 50px;
+        }
+    </style>
+</head>
+
+<body style="background-color: thistle">
+    <br>
+    <nav>
+        <button><a href="./allproduct.html">Məhsullar</a></button>
+        <button><a href="./addbasket.html">Səbətdəki məhsullar</a></button>
+        <button><a href="./deleteproduct.html">Silinmis mehsullar </a></button>
+        <button><a href="./createproduct.html">Məhsul yarat</a></button>
+        <button><a href="./editproduct.html">Məhsul redaktə et</a></button>
+    </nav>
+    <br>
+    <hr>
+    <h3 style="color: brown">SƏBƏTDƏKİ MƏHSULLAR:</h3>
+    <hr>
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul id" id="mehsulID">
+    <button style="color:crimson; width: 120px;height: 25px;" id="btnSebet">Səbətdən çıxarın</button>
+    <div id="root"></div>
+
+    <script>
+
+        const root = document.getElementById("root")
+        async function GetBasketData() {
+            const { data } = await axios.get("http://localhost:3000/basket")
+            return data
+        }
+
+        async function WriteBasket() {
+            const data = await GetBasketData()
+            data.forEach(({ id, product, weight, quantity, price, imgUrl }) => {
+                //async (id) => {
+                // const { data: { product, weight, quantity, price, imgUrl } } = await axios.get("http://localhost:3000/products/" + id)
+                root.innerHTML +=
+                    `<div>
+                    <h5 style="color: red"> ID: ${id}</h5> 
+                     <h5> Məhsul: ${product}</h5> 
+                     <h5> Miqdar: ${weight} ${quantity}</h5> 
+                     <h5> Qiymət: ${price} AZN</h5>
+                     <img style="width: 140px;height: 140px;" src="${imgUrl}" alt="">
+                     <hr>
+                     </div>`
+            })
+        }
+
+        WriteBasket()
+
+        const btnBasket = document.getElementById('btnSebet')
+
+        btnBasket.onclick = () => {
+            const basketID = document.getElementById('mehsulID').value
+            if (basketID === "") {
+                alert("Məhsul İD qeyd edin")
+            } else {
+                async function GetAllProductData() {
+                    const { data } = await axios.get("http://localhost:3000/products")
+                    return data
+                }
+                async function GetAllBasketData() {
+                    const { data } = await axios.get("http://localhost:3000/basket")
+                    return data
+                }
+
+                async function FindData() {
+                    const dataProduct = await GetAllProductData()
+                    const dataBasket = await GetAllBasketData()
+                    const findIDProduct = dataProduct.find(({ id }) => id === +basketID)
+                    const findIDBasket = dataBasket.find(({ id }) => id === +basketID)
+                    axios.patch(`http://localhost:3000/products/${basketID}`, {
+                        weight: (+findIDProduct.weight) + (+findIDBasket.weight)
+                    })
+                    axios.delete(`http://localhost:3000/basket/${basketID}`).then((resp) => {
+                        alert("Məhsul səbətdən çıxarıldı")
+                        document.location.reload()
+                    })
+                }
+                FindData()
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

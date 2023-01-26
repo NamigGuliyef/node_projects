@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <title>EDIT PRODUCT</title>
+</head>
+
+
+<body style="background-color: thistle">
+    <br>
+    <nav>
+        <button><a href="./allproduct.html">Məhsullar</a></button>
+        <button><a href="./addbasket.html">Səbətdəki məhsullar</a></button>
+        <button><a href="./deleteproduct.html">Silinmis mehsullar </a></button>
+        <button><a href="./createproduct.html">Məhsul yarat</a></button>
+        <button><a href="./editproduct.html">Məhsul redaktə et</a></button>
+    </nav>
+    <br>
+    <hr>
+    <h3 style="color: brown">MƏHSUL RƏDAKTƏ ET</h3>
+    <hr>
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul İD yaz" id="məhsulID">
+    <button style="color:crimson;" id="btn">Məlumatları gətir</button><br /><br />
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul" id="məhsul"><br />
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul çəki" id="çəki"><br />
+    <input type="text" style="width: 200px;height: 20px;" placeholder="vahid" id="vahid"><br />
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul qiyməti" id="qiymət"><br />
+    <input type="text" style="width: 200px;height: 20px;" placeholder="məhsul şəkili" id="şəkil"><br /><br />
+    <button style="color:crimson;" id="btn_dəyis">Məlumatları dəyisdir!</button><br />
+
+    <script>
+        const btnInformation = document.getElementById("btn")
+        const productValue = document.getElementById("məhsul")
+        const weightValue = document.getElementById("çəki")
+        const quantityValue = document.getElementById("vahid")
+        const priceValue = document.getElementById("qiymət")
+        const imgUrlValue = document.getElementById("şəkil")
+
+        btnInformation.onclick = () => {
+            const productID = document.getElementById("məhsulID").value
+            if (productID === "") {
+                alert("Məhsul İD daxil edin!")
+            } else {
+                axios.get(`http://localhost:3000/products/${productID}`).then(({ data }) => {
+                    productValue.value = data.product
+                    weightValue.value = data.weight
+                    quantityValue.value = data.quantity
+                    priceValue.value = data.price
+                    imgUrlValue.value = data.imgUrl
+                })
+            }
+        }
+
+        const btnChange = document.getElementById("btn_dəyis")
+        btnChange.onclick = () => {
+            if (productValue.value === "" || weightValue.value === "" || quantityValue.value === "" || priceValue.value === "" || imgUrlValue.value === "") {
+                alert("Xanaları tam və doğru doldurun...")
+            } else {
+                const productID = document.getElementById("məhsulID").value
+                const product = productValue.value 
+                const weight = weightValue.value
+                const quantity = quantityValue.value
+                const price = priceValue.value
+                const imgUrl = imgUrlValue.value
+                axios.patch(`http://localhost:3000/products/${productID}`, {
+                    product,
+                    weight,
+                    quantity,
+                    price,
+                    imgUrl,
+                })
+                axios.patch(`http://localhost:3000/basket/${productID}`, {
+                    product,
+                    weight,
+                    quantity,
+                    price,
+                    imgUrl,
+                })
+
+                alert("Məhsul haqqında məlumat dəyişdirildi...")
+                document.getElementById("məhsulID").value = ""
+                document.getElementById("məhsul").value = ""
+                document.getElementById("çəki").value = ""
+                document.getElementById("vahid").value = ""
+                document.getElementById("qiymət").value = ""
+                document.getElementById("şəkil").value = ""
+            }
+        }
+    </script>
+
+</body>
+
+</html>

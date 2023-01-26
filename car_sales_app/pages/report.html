@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/caricon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <title>Hesabat</title>
+</head>
+
+<body style="background-color: burlywood">
+    <nav>
+        <button><a href="./index.html">Masinlar</a></button>
+        <button><a href="./createCar.html">Masin elave et</a></button>
+        <button><a href="./deletecar.html">Bazadan silinenler</a></button>
+        <button><a href="./report.html">Hesabat</a></button>
+    </nav>
+    <br>
+    <br>
+
+    <h5>Ümumi məbləğ(AZN) : <input type="text" style="width: 100px;height: 20px" id="umumi_meb"></h5>
+    <h5>Gəlir(AZN) : <input type="text" style="width: 100px;height: 20px" id="gelir"></h5>
+    <h5>Yekun məbləğ(AZN) : <input type="text" style="width: 100px;height: 20px" id="yekun_mebleg"></h5><br />
+    <button style="color:crimson" id="hesabat_btn">Hesabat</button>
+
+    <script>
+
+        const alisValue = document.getElementById('umumi_meb')
+        const satisValue = document.getElementById('gelir')
+        const menfeetValue = document.getElementById("yekun_mebleg")
+
+        const hesabat_btn = document.getElementById('hesabat_btn')
+        hesabat_btn.onclick = () => {
+
+            async function GetData() {
+                const { data } = await axios.get("http://localhost:3030/cars")
+                return data
+            }
+
+            async function report() {
+                const data = await GetData()
+                let alis_result = 0;
+                let satis_result = 0;
+                let menfeet_result = 0;
+                data.forEach(obj => {
+                    alis_result += +obj.alis_qiymeti
+                    if (obj.status === "satildi") {
+                        satis_result += +obj.satis_qiymeti
+                    } else {
+                        return satis_result
+                    }
+                });
+                menfeet_result += satis_result - alis_result
+                alisValue.value = alis_result
+                satisValue.value = satis_result
+                menfeetValue.value = menfeet_result
+            }
+            report()
+        }
+
+    </script>
+
+</body>
+
+</html>

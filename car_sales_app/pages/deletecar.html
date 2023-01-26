@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/caricon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <title>Bazadan silinenler</title>
+</head>
+
+<body style="background-color: burlywood">
+
+    <nav>
+        <button><a href="./index.html">Masinlar</a></button>
+        <button><a href="./createCar.html">Masin elave et</a></button>
+        <button><a href="./deletecar.html">Bazadan silinenler</a></button>
+        <button><a href="./report.html">Hesabat</a></button>
+    </nav>
+    <br>
+    <br>
+    <input type="text" style="width: 180px;height: 18px" placeholder="ID" id="ID">
+    <button style="color: crimson;" id="btn_elave_et">Bazaya elave et</button>
+
+    <div id="root"></div>
+    <script>
+
+        const root = document.getElementById("root")
+        async function GetData() {
+            const { data } = await axios.get("http://localhost:3030/delete_cars")
+            return data
+        }
+
+        async function writeData() {
+            const data = await GetData()
+            data.forEach(({ id, adi, modeli, tarixi, olke, reng, yanacaq, alis_qiymeti, satis_qiymeti, status, imgUrl }) => {
+                root.innerHTML +=
+                    `<div>
+                      <h6 style="color: red"> ID: ${id}</h6> 
+                      <h6> Maşın və model : ${adi} ${modeli}</h6> 
+                      <h6> İstehsal tarixi : ${tarixi}</h6> 
+                      <h6> Ölkə : ${olke}</h6>
+                      <h6> Rəng : ${reng}</h6>
+                      <h6> Yanacaq : ${yanacaq}</h6>
+                      <h6> Alış qiyməti : ${alis_qiymeti} AZN</h6>
+                      <h6> Satış qiyməti : ${satis_qiymeti} AZN</h6>
+                      <h6> Status : ${status} </h6>
+                     <img style="width: 180px;height: 160px;" src="${imgUrl}" alt="">
+                     </div>`
+            });
+        }
+        writeData()
+
+
+
+        const btn_elave_et = document.getElementById("btn_elave_et")
+        btn_elave_et.onclick = () => {
+            const carID = document.getElementById('ID').value
+            if (carID !== "") {
+                async function ReturnData() {
+                    const data = await GetData()
+                    const idFinded = data.find(({ id }) => id === +carID)
+                    axios.post("http://localhost:3030/cars", idFinded).then(() => { })
+                    axios.delete(`http://localhost:3030/delete_cars/${carID}`).then(() => {
+                        alert("Silinenler bazasindan cixarildi ve umumi bazaya elave edildi!")
+                    })
+                    document.location.reload()
+                }
+                ReturnData()
+            } else {
+                alert("Xana bosdur!☠")
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

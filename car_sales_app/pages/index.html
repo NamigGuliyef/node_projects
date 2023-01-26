@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/caricon.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <title>Masinlar</title>
+    <style>
+        #root {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            padding: 50px;
+        }
+    </style>
+</head>
+
+<body style="background-color: burlywood">
+
+    <nav>
+        <button><a href="./index.html">Masinlar</a></button>
+        <button><a href="./createCar.html">Masin elave et</a></button>
+        <button><a href="./deletecar.html">Bazadan silinenler</a></button>
+        <button><a href="./report.html">Hesabat</a></button>
+    </nav>
+    <br>
+    <br>
+    <input type="text" style="width: 200px;height: 18px" placeholder="ID" id="ID"><br />
+    <input type="text" style="width: 200px;height: 18px" placeholder="Status" id="status">
+    <button style="color: crimson" id="btn_status_goster">Statusu göstər</button>
+    <button style="color: crimson" id="btn_status_deyis">Status deyisdir</button>
+    <button style="color: crimson" id="btn_sil">Sil</button>
+    <div id="root"></div>
+    <script>
+        const root = document.getElementById('root')
+
+        async function ReadData() {
+            const { data } = await axios.get("http://localhost:3030/cars")
+            return data
+        }
+
+        const btn_status_goster = document.getElementById("btn_status_goster")
+        btn_status_goster.onclick = () => {
+            let idValue = document.getElementById('ID').value
+            let statusValue = document.getElementById('status')
+            if (idValue === "" || statusValue === "") {
+                alert("Xanalari tam doldurun...")
+            } else {
+                async function WriteStatus() {
+                    const data = await ReadData()
+                    const idFind = data.find(({ id }) => id === +idValue)
+                    statusValue.value = idFind.status
+                }
+                WriteStatus()
+            }
+        }
+
+
+        async function WriteData() {
+            const data = await ReadData()
+            data.forEach(({ id, adi, modeli, tarixi, olke, reng, yanacaq, alis_qiymeti, satis_qiymeti, status, imgUrl }) => {
+                root.innerHTML +=
+                    `<div>
+                      <h6 style="color: red"> ID: ${id}</h6> 
+                      <h6> Maşın və model : ${adi} ${modeli}</h6> 
+                      <h6> İstehsal tarixi : ${tarixi}</h6> 
+                      <h6> Ölkə : ${olke}</h6>
+                      <h6> Rəng : ${reng}</h6>
+                      <h6> Yanacaq : ${yanacaq}</h6>
+                      <h6> Alış qiyməti : ${alis_qiymeti} AZN</h6>
+                      <h6> Satış qiyməti : ${satis_qiymeti} AZN</h6>
+                      <h6> Status : ${status} </h6>
+                     <img style="width: 180px;height: 160px;" src="${imgUrl}" alt="">
+                     </div>`
+            });
+        }
+        WriteData()
+
+
+        const btn_status = document.getElementById('btn_status_deyis')
+        btn_status.onclick = () => {
+            const idValue = document.getElementById('ID').value
+            const statusValue = document.getElementById('status').value
+            if (idValue == "" || statusValue == "") {
+                alert("Xanalari tam doldurun...")
+                document.location.reload()
+            } else {
+                axios.patch(`http://localhost:3030/cars/${idValue}`, { status: statusValue }).then(() => { })
+                alert("Statusda dəyişiklik edildi")
+                document.location.reload()
+            }
+        }
+
+
+        const btn_sil = document.getElementById('btn_sil')
+        btn_sil.onclick = () => {
+            const idValue = document.getElementById('ID').value
+            const statusValue = document.getElementById('status').value
+            if (idValue === "" || statusValue === "" || statusValue === "satilir" || statusValue === "bron") {
+                alert("Xanalari tam doldurun ve ya statusa diqqet edin")
+                document.location.reload()
+            } else {
+                async function idFind() {
+                    const data = await ReadData()
+                    const idFinded = data.find(({ id }) => id === +idValue)
+                    axios.post(`http://localhost:3030/delete_cars`, idFinded).then(() => {
+                        alert("<<Bazadan silinenler>> bolmesine elave edildi")
+                        document.location.reload()
+                    })
+                    axios.delete(`http://localhost:3030/cars/${idValue}`).then(() => {
+                        alert("Mehsul bazadan silindi...")
+                    })
+                    document.location.reload()
+                }
+                idFind()
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
